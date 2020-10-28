@@ -1,0 +1,9 @@
+{
+  "short_name": "Education Mandal",
+  "name": "Education Mandal",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
