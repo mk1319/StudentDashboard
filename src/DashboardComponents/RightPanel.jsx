@@ -4,8 +4,8 @@ import styled from "styled-components/macro";
 import AdmissionForm from "./Profile/AdmissionForm";
 import TopHeader from "./TopHeader";
 import LoginForm from "./StudentLogin/Login";
-import ChangePass from './Profile/ChangePass'
-import BookmarkClass from './Profile/Bookmark'
+import ChangePass from "./Profile/ChangePass";
+import BookmarkClass from "./Profile/Bookmark";
 
 const Conatainer = styled.div`
   background-color: #f5f5f5;
@@ -14,7 +14,7 @@ const Conatainer = styled.div`
   overflow-y: scroll;
   padding: 50px 7%;
   scroll-behavior: smooth;
-  input,
+  /* input,
   textarea {
     border: solid 1px rgba(51, 51, 51, 0.3);
     padding: 12px;
@@ -74,7 +74,7 @@ const Conatainer = styled.div`
     &:hover {
       opacity: 1;
     }
-  }
+  } */
 `;
 
 function RightPanel({ Login }) {
@@ -110,12 +110,12 @@ function RightPanel({ Login }) {
           path={`${process.env.PUBLIC_URL}/AdmissionForm`}
           component={AdmissionForm}
         />
-         <ProtectedRouter
+        <ProtectedRouter
           exact
           path={`${process.env.PUBLIC_URL}/BookmarkClass`}
           component={BookmarkClass}
         />
-         <ProtectedRouter
+        <ProtectedRouter
           exact
           path={`${process.env.PUBLIC_URL}/ChangePassword`}
           component={ChangePass}

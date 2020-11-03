@@ -29,7 +29,7 @@ function TopHeader() {
       case `${process.env.PUBLIC_URL}/ChangePassword`:
         return "Change Password";
       case `${process.env.PUBLIC_URL}/BookmarkClass`:
-        return "Bookmark Class";
+        return "Bookmarked Class";
       default:
         break;
     }
@@ -39,7 +39,10 @@ function TopHeader() {
     <Container>
       <p>{title()}</p>
       {location.pathname !== `${process.env.PUBLIC_URL}/ChangePassword` && (
-        <Link to={`${process.env.PUBLIC_URL}/AdmissionForm`} className="profile" />
+        <Link
+          to={`${process.env.PUBLIC_URL}/AdmissionForm`}
+          className="profile"
+        />
       )}
     </Container>
   );

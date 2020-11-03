@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components/macro";
-import UploadImage from "../UploadImage";
-import { RiShareBoxLine } from "react-icons/ri";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useForm, useStep } from "react-hooks-helper";
+import Personal from "./StepForm/Personal";
+import Parent from "./StepForm/Parent";
+import Academics from "./StepForm/Academics";
 import { connect } from "react-redux";
-import axios from "axios";
 
 const Container = styled.section`
   margin-top: 72px;
@@ -45,125 +44,102 @@ const Container = styled.section`
   }
 `;
 
-const ImageContainer = styled.div`
-  .class-image {
-    margin: 0 auto;
-    width: 300px;
-    height: 300px;
-    background-color: grey;
-    border-radius: 50%;
-    position: relative;
-    background-image: ${({ picture }) =>
-      picture &&
-      `url(https://data.educationmandal.com/assest/Class/Teacher/${picture})`};
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    .preview {
-      position: absolute;
-      right: 16px;
-      top: 16px;
-      .icon {
-        padding: 16px;
-        box-sizing: content-box;
-        border-radius: 50%;
-        background-color: #f5f5f5;
-        color: ${(props) => props.theme.colors.lParagraph};
-      }
-    }
-  }
-`;
+// const ImageContainer = styled.div`
+//   .class-image {
+//     margin: 0 auto;
+//     width: 300px;
+//     height: 300px;
+//     background-color: grey;
+//     border-radius: 50%;
+//     position: relative;
+//     background-image: ${({ picture }) =>
+//       picture &&
+//       `url(https://data.educationmandal.com/assest/Class/Teacher/${picture})`};
+//     background-position: center;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     .preview {
+//       position: absolute;
+//       right: 16px;
+//       top: 16px;
+//       .icon {
+//         padding: 16px;
+//         box-sizing: content-box;
+//         border-radius: 50%;
+//         background-color: #f5f5f5;
+//         color: ${(props) => props.theme.colors.lParagraph};
+//       }
+//     }
+//   }
+// `;
 
 function AdmissionForm({ ID }) {
- 
-  const [Data, setData] = useState({
+  const defaultData = {
     name: "",
-    biography: "",
-    experience: "",
-    qualification: "",
-    msg: "",
-    picture: "",
+    surname: "",
+    gender: "",
+    dob: "",
+    email: "",
+    contact: "",
+    currentAddress: "",
+    language: "",
+    currentStd: "",
+    currentInstitution: "",
+    prevPercentage: "",
+    prevInstitution: "",
+    stream: "",
+    hobbies: "",
+    fatherName: "",
+    fatherContact: "",
+    fatherEmail: "",
+    fatherQualification: "",
+    fatherOccupation: "",
+    motherName: "",
+    motherContact: "",
+    motherEmail: "",
+    motherQualification: "",
+    motherOccupation: "",
+  };
+
+  const steps = [{ id: "personal" }, { id: "academics" }, { id: "parent" }];
+
+  const [formData, setFormData] = useForm(defaultData);
+  const { step, navigation } = useStep({
+    steps,
+    initialStep: 1,
   });
+
+  const props = { formData, setFormData, navigation };
+
+  const handleSubmit = () => {
+    console.log("Working");
+  };
+
+  switch (step.id) {
+    case "personal":
+      return <Personal {...props} />;
+
+    case "academics":
+      return <Academics {...props} />;
+
+    case "parent":
+      return <Parent {...props} handleSubmit={handleSubmit} />;
+
+    default:
+      break;
+  }
 
   //const [PictureUploadStatus, setPictureUploadStatus] = useState(false);
 
-  const handlesubmit = () => {
-   alert("Submit press")
-  };
-
-    //Use For Upload Picture (Remove  that)
+  //Use For Upload Picture (Remove  that)
   // const uploadstatus = () => {
   //   setPictureUploadStatus(!PictureUploadStatus);
   // };
 
- 
-  function handlechange(e) {
-    let data = Data;
-    setData({ ...data, [e.id]: e.value });
-  }
-
   return (
     <Container>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            placeholder="Enter name"
-            type="text"
-            value={Data.name}
-            onChange={(e) => handlechange(e.target)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="biography">Biography</label>
-          <textarea
-            id="biography"
-            placeholder="biography"
-            type="textarea"
-            rows="5"
-            cols="45"
-            value={Data.biography}
-            onChange={(e) => handlechange(e.target)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="experience">Experience</label>
-          <textarea
-            id="experience"
-            placeholder="Enter experience"
-            type="textarea"
-            rows="5"
-            cols="45"
-            value={Data.experience}
-            onChange={(e) => handlechange(e.target)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="qualification">Qualification</label>
-          <textarea
-            id="qualification"
-            placeholder="Enter qualification"
-            type="textarea"
-            rows="5"
-            cols="45"
-            value={Data.qualification}
-            onChange={(e) => handlechange(e.target)}
-          />
-        </div>
-        <button
-          onClick={() => {
-            handlesubmit();
-          }}
-        >
-          Save Changes
-        </button>
-        <p style={{ color: "green", textAlign: "left" }}>{Data.msg}</p>
-      </form>
+      <h1>Form</h1>
+
       {/* <ImageContainer picture={Data.picture}>
         <div className="class-image">
           <a

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { NavLink } from "react-router-dom";
-import {MdCollectionsBookmark} from "react-icons/md";
-import { FiLogOut} from "react-icons/fi";
-import {FaWpforms} from 'react-icons/fa'
-import {Logout} from '../Store/action/action';
-import {connect} from 'react-redux';
-import {RiLockPasswordFill} from 'react-icons/ri'
+import { BsFillBookmarkFill } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+import { FaWpforms } from "react-icons/fa";
+import { Logout } from "../Store/action/action";
+import { connect } from "react-redux";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const Container = styled.div`
   height: 100vh;
@@ -65,31 +65,41 @@ const Container = styled.div`
   }
 `;
 
-function Sidebar({Logout}) {
-
-
-
-
+function Sidebar({ Logout }) {
   return (
     <Container>
       <ul>
         <li>
-          <NavLink title="Admission Form" to={`${process.env.PUBLIC_URL}/AdmissionForm`}>
+          <NavLink
+            title="Admission Form"
+            to={`${process.env.PUBLIC_URL}/AdmissionForm`}
+          >
             <FaWpforms size="2em" className="sidebar-icon" />
           </NavLink>
         </li>
         <li>
-          <NavLink title="BookMark" to={`${process.env.PUBLIC_URL}/BookmarkClass`}>
-            <MdCollectionsBookmark size="2em" className="sidebar-icon" />
+          <NavLink
+            title="BookMark"
+            to={`${process.env.PUBLIC_URL}/BookmarkClass`}
+          >
+            <BsFillBookmarkFill size="2em" className="sidebar-icon" />
           </NavLink>
         </li>
         <li>
-          <NavLink title="Change-Password" to={`${process.env.PUBLIC_URL}/ChangePassword`}>
+          <NavLink
+            title="Change-Password"
+            to={`${process.env.PUBLIC_URL}/ChangePassword`}
+          >
             <RiLockPasswordFill size="2em" className="sidebar-icon" />
           </NavLink>
         </li>
         <li>
-          <button title="Logout" onClick={()=>{Logout()}}>
+          <button
+            title="Logout"
+            onClick={() => {
+              Logout();
+            }}
+          >
             <FiLogOut size="1.8em" strokeWidth="3px" className="sidebar-icon" />
           </button>
         </li>
@@ -98,8 +108,7 @@ function Sidebar({Logout}) {
   );
 }
 const maptoprops = (state) => ({
-  Login:state.Login.islogin,
+  Login: state.Login.islogin,
 });
 
-
-export default connect(maptoprops,{Logout})(Sidebar);
+export default connect(maptoprops, { Logout })(Sidebar);
