@@ -85,14 +85,14 @@ function Sidebar({ Logout }) {
             <BsFillBookmarkFill size="2em" className="sidebar-icon" />
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             title="Change-Password"
             to={`${process.env.PUBLIC_URL}/ChangePassword`}
           >
             <RiLockPasswordFill size="2em" className="sidebar-icon" />
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <button
             title="Logout"

@@ -1,7 +1,7 @@
 {
   "name": "em-dashboard",
   "version": "0.1.0",
-  "homepage": "https://educationmandal.com/Student",
+  "homepage": "https://educationmandal.com/Dashboard",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",

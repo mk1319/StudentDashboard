@@ -5,10 +5,11 @@ import jwt from 'jwt-simple';
 export const Get_Status = () => async(dispatch) => {
     try {
         let Data={isLogin:false}
-        if(localStorage.getItem('StudetntLogin')!==null)
+        if(localStorage.getItem('StudentLogin')!==null)
         {
-            Data=jwt.decode(localStorage.getItem('StudetntLogin'),process.env.REACT_APP_KEY)
+            Data=jwt.decode(localStorage.getItem('StudentLogin'),process.env.REACT_APP_KEY)
         }
+    
         dispatch({
             type:GET_LOGIN_STATUS, 
             payload: Data
@@ -21,7 +22,7 @@ export const Get_Status = () => async(dispatch) => {
 export const Logout=()=>async(dispatch)=>{
     try{
         
-        localStorage.removeItem("StudetntLogin")
+        localStorage.removeItem("StudentLogin")
 
         dispatch({
             type:LOGOUT,

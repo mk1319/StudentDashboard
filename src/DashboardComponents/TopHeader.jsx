@@ -13,7 +13,7 @@ const Container = styled.div`
   .profile {
     width: 45px;
     height: 45px;
-    background-color: grey;
+
     border-radius: 50%;
     cursor: pointer;
   }
@@ -39,10 +39,15 @@ function TopHeader() {
     <Container>
       <p>{title()}</p>
       {location.pathname !== `${process.env.PUBLIC_URL}/ChangePassword` && (
-        <Link
+        <p
           to={`${process.env.PUBLIC_URL}/AdmissionForm`}
           className="profile"
-        />
+          onClick={()=>
+            (window.location.href = "https://educationmandal.com/class")
+          }
+        >
+          BrowseClass
+        </p>
       )}
     </Container>
   );

@@ -3,7 +3,7 @@ import {GET_LOGIN_STATUS,LOGOUT} from "../action/type";
 
 
 const checktoken=()=>{
-  if(localStorage.getItem("StudetntLogin")){
+  if(localStorage.getItem("StudentLogin")){
         return true
     }
   return false
@@ -14,6 +14,8 @@ const loginstate = {
     ID:0,
     Name:"",
     User:"",
+    Email:"",
+    Contact:""
   };
 
 
@@ -26,6 +28,8 @@ const LoginHandle = (state = loginstate, action) => {
                       islogin:action.payload.isLogin,
                       ID:action.payload.ID,
                       Name:action.payload.Name,
+                      Email:action.payload.Email,
+                      Contact:action.payload.Contact
                     }
         case LOGOUT:
           return {islogin:action.payload.isLogin}

@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components/macro";
 import AdmissionForm from "./Profile/AdmissionForm";
 import TopHeader from "./TopHeader";
-import LoginForm from "./StudentLogin/Login";
+// import LoginForm from "./StudentLogin/Login";
 import ChangePass from "./Profile/ChangePass";
 import BookmarkClass from "./Profile/Bookmark";
 
@@ -85,9 +85,9 @@ function RightPanel({ Login }) {
         Login ? (
           <Component {...props} />
         ) : (
-          <Redirect to={`${process.env.PUBLIC_URL}/Login`} />
+          // <Redirect to={`${process.env.PUBLIC_URL}/Login`} />
           // Add below line after making teacher login
-          // (window.location.href = "https://educationmandal.com/Login/Teacher")
+           (window.location.href = "https://educationmandal.com/Login/Student")
         )
       }
     />
@@ -100,11 +100,11 @@ function RightPanel({ Login }) {
         <ProtectedRouter exact path={`${process.env.PUBLIC_URL}/`}>
           <Redirect to={`${process.env.PUBLIC_URL}/AdmissionForm`} />
         </ProtectedRouter>
-        <Route
+        {/* <Route
           exact
           path={`${process.env.PUBLIC_URL}/Login`}
           component={LoginForm}
-        />
+        /> */}
         <ProtectedRouter
           exact
           path={`${process.env.PUBLIC_URL}/AdmissionForm`}

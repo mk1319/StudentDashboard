@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, TextField, Button } from "@material-ui/core";
 
-const Parent = ({ formData, setFormData, navigation, handleSubmit }) => {
+const Parent = ({ formData, setFormData, navigation, handleSubmit,msg }) => {
   const {
     fatherName,
     fatherContact,
@@ -156,6 +156,7 @@ const Parent = ({ formData, setFormData, navigation, handleSubmit }) => {
         >
           Previous
         </Button>
+          <p style={{color:"green"}}>{msg}</p>
         <Button
           type="submit"
           color="primary"

@@ -20,7 +20,7 @@ const Personal = ({ formData, setFormData, navigation }) => {
     currentAddress,
     language,
   } = formData;
-  console.log(contact);
+
   return (
     <Box maxWidth="50%" style={{ marginTop: "40px" }}>
       <h3>Personal</h3>
@@ -35,6 +35,7 @@ const Personal = ({ formData, setFormData, navigation }) => {
         autoComplete="off"
         size="small"
         fullWidth
+      
       />
       <TextField
         required
@@ -109,6 +110,7 @@ const Personal = ({ formData, setFormData, navigation }) => {
         onChange={setFormData}
         fullWidth
         size="small"
+        disabled
         margin="normal"
       />
       <TextField

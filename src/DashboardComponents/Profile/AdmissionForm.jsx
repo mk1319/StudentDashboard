@@ -5,6 +5,8 @@ import Personal from "./StepForm/Personal";
 import Parent from "./StepForm/Parent";
 import Academics from "./StepForm/Academics";
 import { connect } from "react-redux";
+import axios from 'axios';
+import { useState,useEffect } from "react";
 
 const Container = styled.section`
   margin-top: 72px;
@@ -73,14 +75,20 @@ const Container = styled.section`
 //   }
 // `;
 
-function AdmissionForm({ ID }) {
+function AdmissionForm({ ID,Email,Contact,Name}) {
+
+
+  const [Admissionform,setAdmissionform]=useState([])
+  const[render,setrender]=useState(false)
+  
   const defaultData = {
-    name: "",
+    ID:ID,
+    name: Name,
     surname: "",
     gender: "",
     dob: "",
-    email: "",
-    contact: "",
+    email: Email,
+    contact: Contact,
     currentAddress: "",
     language: "",
     currentStd: "",
@@ -99,22 +107,72 @@ function AdmissionForm({ ID }) {
     motherEmail: "",
     motherQualification: "",
     motherOccupation: "",
+    Aid:0
   };
+
+
+  useEffect(()=>{
+    axios.get(`https://data.educationmandal.com/api/User/Admission/${ID}`)
+    .then((res)=>{
+      setAdmissionform(res.data)
+      if(res.data.length)
+      {
+        defaultData.name=res.data[0].Name
+        defaultData.surname=res.data[0].Surname
+        defaultData.Aid=res.data[0].Aid
+        defaultData.gender=res.data[0].Gender
+        defaultData.dob=res.data[0].Date_of_birth
+        // defaultData.email=res.data[0].Email
+        defaultData.contact=res.data[0].Contact
+        defaultData.currentAddress=res.data[0].Address
+        defaultData.language=res.data[0].Language
+        defaultData.currentStd=res.data[0].Cur_std
+        defaultData.currentInstitution=res.data[0].Cur_Inst
+        defaultData.prevPercentage=res.data[0].Percentage
+        defaultData.prevInstitution=res.data[0].Prev_Inst
+        defaultData.stream=res.data[0].Stream
+        defaultData.hobbies=res.data[0].Hobbies
+        defaultData.fatherName=res.data[0].Father
+        defaultData.fatherContact=res.data[0].FatherContact
+        defaultData.fatherEmail=res.data[0].FatherEmail
+        defaultData.fatherQualification=res.data[0].FatherQualif
+        defaultData.fatherOccupation=res.data[0].Fatheroccu
+        defaultData.motherName=res.data[0].Mother
+        defaultData.motherContact=res.data[0].MotherContact
+        defaultData.motherEmail=res.data[0].MotherEmail
+        defaultData.motherQualification=res.data[0].MotherQualif
+        defaultData.motherOccupation=res.data[0].Motheroccu
+      }
+      setrender(true)
+    })
+  },[])
+
 
   const steps = [{ id: "personal" }, { id: "academics" }, { id: "parent" }];
 
   const [formData, setFormData] = useForm(defaultData);
+  const[msg,setmsg]=useState('')
   const { step, navigation } = useStep({
     steps,
-    initialStep: 1,
+    initialStep: 0,
   });
 
   const props = { formData, setFormData, navigation };
 
-  const handleSubmit = () => {
-    console.log("Working");
+  const handleSubmit =()=> {
+    axios.post('https://data.educationmandal.com/api/User/Admission',{
+      formData:formData
+    })
+    .then((res)=>{
+      setmsg(res.data.msg)
+    })
+
+    setTimeout(()=>{
+      setmsg("")
+    },2000)
   };
 
+if(render){
   switch (step.id) {
     case "personal":
       return <Personal {...props} />;
@@ -123,11 +181,12 @@ function AdmissionForm({ ID }) {
       return <Academics {...props} />;
 
     case "parent":
-      return <Parent {...props} handleSubmit={handleSubmit} />;
+      return <Parent {...props} handleSubmit={handleSubmit} msg={msg}/>;
 
     default:
       break;
   }
+}
 
   //const [PictureUploadStatus, setPictureUploadStatus] = useState(false);
 
@@ -164,4 +223,6 @@ function AdmissionForm({ ID }) {
   );
 }
 
-export default connect((state) => ({ ID: state.Login.ID }), {})(AdmissionForm);
+export default connect((state) => ({ ID: state.Login.ID,Email:state.Login.Email,
+                                      Contact:state.Login.Contact,
+                                    Name:state.Login.Name }), {})(AdmissionForm);

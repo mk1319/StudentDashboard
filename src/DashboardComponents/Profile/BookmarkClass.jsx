@@ -23,11 +23,12 @@ const BookmarkPill = styled.div`
     }
   }
 `;
-function BookmarkClass() {
+function BookmarkClass({data}) {
+
   return (
     <BookmarkPill>
-      <h4>Mahesh Tutorials</h4>
-      <a href="" className="link-container">
+      <h4>{data.Name}</h4>
+      <a href={`https://educationmandal.com/class/${data.Name}/${data.ClassID}`} className="link-container" target="_blank">
         <BsLink45Deg size="1.5rem" />
       </a>
     </BookmarkPill>
