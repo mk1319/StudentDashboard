@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components/macro";
 import { NavLink } from "react-router-dom";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut,FiKey} from "react-icons/fi";
 import { FaWpforms } from "react-icons/fa";
 import { Logout } from "../Store/action/action";
 import { connect } from "react-redux";
-import { RiLockPasswordFill } from "react-icons/ri";
 
 const Container = styled.div`
   height: 100vh;
@@ -85,14 +84,14 @@ function Sidebar({ Logout }) {
             <BsFillBookmarkFill size="2em" className="sidebar-icon" />
           </NavLink>
         </li>
-        {/* <li>
+        <li>
           <NavLink
             title="Change-Password"
             to={`${process.env.PUBLIC_URL}/ChangePassword`}
           >
-            <RiLockPasswordFill size="2em" className="sidebar-icon" />
+            <FiKey size="2em" className="sidebar-icon" />
           </NavLink>
-        </li> */}
+        </li>
         <li>
           <button
             title="Logout"

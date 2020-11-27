@@ -1,75 +1,105 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import styled from "styled-components/macro";
-import { Button, TextField } from "@material-ui/core";
 import axios from 'axios';
 import { connect } from "react-redux";
 
 const Container = styled.section`
   margin-top: 72px;
   min-width: 100%;
-  column-gap: 36px;
+  `
+const StyledForm = styled.form`
+  display: grid;
+  grid-template-columns: 3fr 3fr 1fr;
+  align-items: center;
+  row-gap: 24px;
+  margin-top: 30px;
+  max-width: 820px;
+  input {
+    flex: 1;
+    width: stretch;
+  }
+
   button {
-    background-color: ${(props) => props.theme.colors.panelsDark} !important;
-    color: white;
+    justify-self: flex-start;
+    &.add {
+      grid-row: 2;
+      background-color: ${(props) => props.theme.colors.panelsDark} !important;
+      color: white;
+      border-radius: 5px;
+      padding: 12px 24px;
+    }
   }
 `;
 
 
 function ChangePass({ID}){
 
-    const[msg,setmsg]=useState("")
-    const [match,setmatch]=useState(false)
-    const [pass,setpass]=useState("")
+    const [Pass,setPass]=useState("")
+    const [Status,setStatus]=useState(false)
+    const [msg,setmsg]=useState("")
 
-    function handlesubmit(){
-        
-        axios.post("http://localhost:5000/User/ChangePassword",{
-            ID:ID,
-            Password:pass,
-            match:match
-        })
-        .then((res)=>{
+    const handlesubmit=()=>{
 
-            setmsg(res.data.msg)
-            setmatch(res.data.status)
-            console.log(res.data)
-        })
+        if(Status)
+        {
+            axios.post('https://data.educationmandal.com/api/User/ChangePassword',{
+                ID:ID,
+                Password:Pass
+            })
+            .then((res)=>{
+                setmsg(res.data.msg)
+                setPass("")
+                setTimeout(()=>{
+                    setStatus(false)
+                    setmsg("")
+                },5000)
+            })
+
+        }
+        else
+        {
+            axios.post('https://data.educationmandal.com/api/User/CheckPassword',{
+                ID:ID,
+                Password:Pass
+            })
+            .then((res)=>{
+                setStatus(res.data.Status)
+                setmsg(res.data.msg)
+                setPass("")
+            })
+        }
     }
-    
 
+    return(
+    <Container>
+        <h1>Enter {Status?"New":"Old"} Password:-</h1>
+        <h1 style={Status?{color:"Green"}:{color:"Red"}}>{msg}</h1>
+        <StyledForm
+            onSubmit={(e) => {
+                e.preventDefault();
+            }}
+        >
+        <input
+          type="text"
+          value={Pass}
+          onChange={(e)=>setPass(e.target.value)}
+          required
+          placeholder={Status?"Enter New Password":"Enter Old Password"}
+        />
 
-    return (
-        <Container>
-            <TextField
-                required
-                value={pass}
-                onChange={(e)=>setpass(e.target.value)}
-                label={match?"New Password":"old Password"}
-                name="currentStd"
-                autoComplete="off"
-                variant="outlined"
-                placeholder="old Password"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-            <br/>
-            <Button
-                onClick={()=>handlesubmit()}
-                type="submit"
-                color="primary"
-                style={{marginTop: "20px" }}
-                variant="contained"
-            >
-               {match?"Change Password":"Enter"}
-            </Button>  <label style={{color:"green"}}>{msg}</label>
-        </Container>
+        <button className="add" onClick={()=>handlesubmit()}>
+          Enter
+        </button>
+        <label style={{ color: "green" }}>{}</label>
+      </StyledForm>
+    </Container>
+
     )
+
 }
 
-
-const maptoprops = (state) => ({
+export default connect((state) => ({
     ID: state.Login.ID,
-  });
-
-export default connect(maptoprops,{})(ChangePass)
+  }))(ChangePass)
+  
